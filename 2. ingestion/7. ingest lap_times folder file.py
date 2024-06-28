@@ -53,13 +53,9 @@ lap_times_final_df = lap_times_df.withColumnRenamed("raceId", "race_id") \
 
 # COMMAND ----------
 
-# step3 - write out data to parquet file 
-lap_times_final_df.write.mode("append").format("parquet").saveAsTable("staging.lap_times")
-
-# COMMAND ----------
-
-df = spark.read.parquet(f"{staging_folder_path}/lap_times")
-display(df)
+# merge_delta_data(output_df, 'staging', 'saved file name', staging_folder_path, merge_condition, 'partition key/column')
+merge_condition = "tgt.race_id = upd.race_id and tgt.driver_id = upd.driver_id and tgt.lap = upd.lap and tgt.race_id = upd.race_id"
+merge_delta_data(lap_times_final_df, 'staging', 'lap_times', staging_folder_path, merge_condition, 'race_id')
 
 # COMMAND ----------
 

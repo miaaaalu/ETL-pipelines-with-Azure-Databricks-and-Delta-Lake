@@ -30,15 +30,20 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **project challenge 
-# MAGIC **
-# MAGIC how to handle duplicated data 
-# MAGIC - inital arthciture desisgn is based on data lake, 
-# MAGIC - to handle duplicate data i overwrite the partiton id, but the issue is some past data will be corrected, and it won't be load. 
-# MAGIC - so to solve this, to redevelop the entire pipeline to delta lake architcher. 
+# MAGIC **project challenge**
+# MAGIC
+# MAGIC 1. how to handle duplicated data 
+# MAGIC
+# MAGIC - from etl design persepctive (this is prevent duplicate data on ingestion level)
+# MAGIC   - if  arthciture desisgn is based on data lake, then overwrite the partiton column, but the limition is if some past data has been be corrected, and it won't be load. 
+# MAGIC   - the better option is use CDC technology - to use Delta Lake deisgn,redevelop the entire pipeline by using merge.
+# MAGIC
+# MAGIC - other scenario, e.g. source data is duplicated 
+# MAGIC   - ask source data team to fix it 
+# MAGIC   - if not applicable, then de-duplicated
 # MAGIC
 # MAGIC
-# MAGIC data lake challenge
+# MAGIC 2. data lake challenge
 # MAGIC - unable to handle duplicate data 
 # MAGIC - ubable to roll bakc data 
 # MAGIC - no history of versioning of the data 

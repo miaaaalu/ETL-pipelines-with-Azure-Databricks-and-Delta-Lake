@@ -60,13 +60,9 @@ qualifying_final_df = qualifying_df.withColumnRenamed("raceId", "race_id") \
 
 # COMMAND ----------
 
-# step3 - write out data to parquet file 
-qualifying_final_df.write.mode("append").format("parquet").saveAsTable("staging.qualifyings")
-
-# COMMAND ----------
-
-df = spark.read.parquet(f"{staging_folder_path}/qualifyings")
-display(df)
+# merge_delta_data(output_df, 'staging', 'saved file name', staging_folder_path, merge_condition, 'partition key/column')
+merge_condition = "tgt.qualify_id = upd.qualify_id and tgt.race_id = upd.race_id"
+merge_delta_data(qualifying_final_df, 'staging', 'qualifyings', staging_folder_path, merge_condition, 'race_id')
 
 # COMMAND ----------
 

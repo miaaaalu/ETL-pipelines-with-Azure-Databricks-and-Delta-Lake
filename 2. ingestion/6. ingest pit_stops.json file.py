@@ -56,13 +56,9 @@ pit_stops_final_df = pit_stops_df.withColumnRenamed("raceId", "race_id") \
 
 # COMMAND ----------
 
-# step3 - write out data to parquet file 
-pit_stops_final_df.write.mode("append").format("parquet").saveAsTable("staging.pit_stops")
-
-# COMMAND ----------
-
-df = spark.read.parquet(f"{staging_folder_path}/pit_stops")
-display(df)
+# merge_delta_data(output_df, 'staging', 'saved file name', staging_folder_path, merge_condition, 'partition key/column')
+merge_condition = "tgt.race_id = upd.race_id and tgt.driver_id = upd.driver_id and tgt.stop = upd.stop and tgt.race_id = upd.race_id"
+merge_delta_data(pit_stops_final_df, 'staging', 'pit_stops', staging_folder_path, merge_condition, 'race_id')
 
 # COMMAND ----------
 

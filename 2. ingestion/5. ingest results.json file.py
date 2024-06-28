@@ -4,20 +4,24 @@
 
 # COMMAND ----------
 
+# DBTITLE 1,set parameter - data source
 dbutils.widgets.text("p_data_source", "")
 v_data_source = dbutils.widgets.get("p_data_source")
 
 # COMMAND ----------
 
+# DBTITLE 1,set parameter - ingest date
 dbutils.widgets.text("p_file_date", "2021-03-21")
 v_file_date = dbutils.widgets.get("p_file_date")
 
 # COMMAND ----------
 
+# DBTITLE 1,call configuration function
 # MAGIC %run "../includes/configuration"
 
 # COMMAND ----------
 
+# DBTITLE 1,call programming used function
 # MAGIC %run "../includes/common_functions"
 
 # COMMAND ----------
@@ -74,8 +78,13 @@ results_final_df = results_df.withColumnRenamed("resultId", "result_id") \
 
 # COMMAND ----------
 
+# DBTITLE 1,deduplicate dataset
+deduped_final_df = results_final_df.dropDuplicates(['race_id','driver_id'])
+
+# COMMAND ----------
+
 merge_condition = "tgt.result_id = upd.result_id and tgt.race_id = upd.race_id"
-merge_delta_data(results_final_df, 'staging', 'results', staging_folder_path, merge_condition, 'race_id')
+merge_delta_data(deduped_final_df, 'staging', 'results', staging_folder_path, merge_condition, 'race_id')
 
 # COMMAND ----------
 
@@ -90,7 +99,22 @@ merge_delta_data(results_final_df, 'staging', 'results', staging_folder_path, me
 
 # MAGIC %sql
 # MAGIC select
+# MAGIC   r.file_date,
+# MAGIC   r.race_id, 
+# MAGIC   r.driver_id,
+# MAGIC   count(*) 
+# MAGIC from staging.results as r 
+# MAGIC --where r.driver_id = 612
+# MAGIC group by 1,2,3
+# MAGIC having count(*) > 1
+# MAGIC
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select
 # MAGIC   r.race_id,
 # MAGIC   count(*) 
 # MAGIC from staging.results as r 
 # MAGIC group by 1
+# MAGIC order by 1 desc;
