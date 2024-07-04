@@ -15,11 +15,11 @@ v_file_date = dbutils.widgets.get("p_file_date")
 
 # COMMAND ----------
 
-# MAGIC %run "/Workspace/formula1/includes/configuration"
+# MAGIC %run "../includes/common_functions"
 
 # COMMAND ----------
 
-# MAGIC %run "/Workspace/formula1/includes/common_functions"
+# MAGIC %run "../includes/configuration"
 
 # COMMAND ----------
 
