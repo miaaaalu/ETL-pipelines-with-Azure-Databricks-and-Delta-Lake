@@ -1,9 +1,0 @@
-{
-	"name": "databricks-adf-mia",
-	"location": "australiasoutheast",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "33f85427-129b-4c20-b440-3de9b6daa176",
-		"tenantId": "b361cf33-e06b-47a1-8963-e0dbee15ae52"
-	}
-}
