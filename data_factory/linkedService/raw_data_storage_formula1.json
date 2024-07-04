@@ -1,0 +1,12 @@
+{
+	"name": "raw_data_storage_formula1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://miaformula1dl.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUzQkUxNUJBLURGNkUtNDlBQi05MDcxLUU5MjgxQjNFNEI4RV8wZDlmZjdlZS0xM2Y0LTQ2ZDMtOWM1YS1iNzNkYTQ2NzBjYzQiDQp9"
+		}
+	}
+}
